@@ -26,8 +26,6 @@ namespace calculator
         }
     }
 
-
-
     // Parser class to parse the input
     public class Parser
     {
@@ -48,46 +46,55 @@ namespace calculator
         }
     }
 
-    // Calculator class to perform operations
     public class Calculator
     {
-        // ---------- TODO ----------
-        
-        //¾È³çÇÏ¼¼¿ä
+        public double Calculate(double num1, string op, double num2)
+        {
+            switch (op)
+            {
+                case "+":
+                    return num1 + num2;
+                case "-":
+                    return num1 - num2;
+                case "*":
+                    return num1 * num2;
+                case "/":
+                    if (num2 == 0)
+                        throw new DivideByZeroException("Cannot divide by zero");
+                    return num1 / num2;
+                case "%":
+                    return num1 % num2;
+                case "**":
+                    return Math.Pow(num1, num2);
+                case "G":
+                    return GCD((int)num1, (int)num2);
+                case "L":
+                    return LCM((int)num1, (int)num2);
+                default:
+                    throw new InvalidOperationException($"Unsupported operator: {op}");
+            }
+        }
 
-        // --------------------
+        private int GCD(int a, int b)
+        {
+            a = Math.Abs(a);
+            b = Math.Abs(b);
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        private int LCM(int a, int b)
+        {
+            if (a == 0 || b == 0) return 0;
+            return Math.Abs(a * b) / GCD(a, b);
+        }
     }
 }
 
-/* example output
 
-Enter an expression (ex. 2 + 3):
->> 4 * 3
-Result: 12
-
-*/
-
-
-/* example output (CHALLANGE)
-
-Enter an expression (ex. 2 + 3):
->> 4 ** 3
-Result: 64
-
-Enter an expression (ex. 2 + 3):
->> 5 ** -2
-Result: 0.04
-
-Enter an expression (ex. 2 + 3):
->> 12 G 15
-Result: 3
-
-Enter an expression (ex. 2 + 3):
->> 12 L 15
-Result: 60
-
-Enter an expression (ex. 2 + 3):
->> 12 % 5
-Result: 2
-
-*/
+//c
